@@ -1,5 +1,9 @@
 {% extends 'dashboard/base.html' %} 
+{% load crispy_forms_tags %}
 {% load static %}
+
+
+
 {% block content %}
 
 <div class="container">
@@ -29,7 +33,7 @@
         <fieldset class="form-group">
             <legend class="border-bottom mb-4">Create Notes</legend>
         </fieldset>
-        <input type = text/>
+    {{form|crispy}}
         <div class="form-group">
             <button href="" class="btn btn-outline-info" type="submit">
                 Create
