@@ -20,7 +20,7 @@
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Student Study Portal</a>        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <a class="navbar-brand" href="/">Student Study Portal</a>        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -70,8 +70,18 @@
   </header>
   <br /><br />
   <main>
+    {% if messages %}
+    {% for msg in  messages %}
+    <div class="alert alert-{{msg.tags}} alert-dismissible fade show" role="alert">
+      <strong>{{request.user.username}}</strong> {{msg}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>{% endfor %}
+    {% endif %}
+    {% block content %} 
+   
 
-    {% block content %}
     {% endblock content %}
 
   </main>
