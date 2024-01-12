@@ -3,6 +3,9 @@ from . models import notes
 from django.urls import reverse
 from . forms import *
 from django.contrib import messages
+from django.views import generic
+
+
 # Create your views here.
 def home(request):
     return render(request , 'dashboard/home.html')
@@ -28,3 +31,6 @@ def delete(request , pk = None):
     
     notes.objects.get(id = pk).delete()
     return redirect('notes')
+
+class  NotesDetailView(generic.DetailView):
+    model = notes
