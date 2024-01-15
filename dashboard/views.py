@@ -5,6 +5,7 @@ from . forms import *
 from django.contrib import messages
 from django.views import generic
 from youtubesearchpython import VideosSearch
+import requests
 
 
 # Create your views here.
@@ -130,5 +131,56 @@ def todo(request):
               
         form = TodoForm()
     alldata = Todo.objects.filter(user = request.user)
-    context = {'alldata':alldata , 'form':form}
+    if len(alldata) == 0:
+        todo_done = True
+    else:
+        todo_done = False
+    context = {'alldata':alldata , 'form':form ,'todo_done':todo_done}
     return render(request , 'dashboard/todo.html' , context)
+
+def update_todo(request , pk = None):
+    todo = Todo.objects.get(id = pk)
+    print(todo)
+    if todo.is_finished == True:
+        todo.is_finished = False
+    else:
+        todo.is_finished = True
+        
+    todo.save()
+    return redirect('todo')
+
+def delete_todo(request , pk = None):
+    Todo.objects.get(id = pk).delete()
+    return redirect('todo')
+    
+    
+def books(request):
+    if request.method == "POST":
+        form = Dashboardform(request.POST)
+        text = request.POST['text']
+        url = "https://www.googleapis.com/books/v1/volumes?q="+text
+        r = requests.get(url)
+        answer = r.json()
+        result_list = []
+        for i in range(10):
+            result_dict = {
+                'title':answer['items'][i]['volumeInfo']['title'],
+                'subtitle':answer['items'][i]['volumeInfo'].get('subtitle'),
+                
+                'description':answer['items'][i]['volumeInfo'].get('description'),
+                'count':answer['items'][i]['volumeInfo'].get('pageCount'),
+                'categories':answer['items'][i]['volumeInfo'].get('categories'),
+                'rating':answer['items'][i]['volumeInfo'].get('pageRating'),
+                'thumbnail':answer['items'][i]['volumeInfo'].get('imageLinks').get('thumbnail'),
+                'preview':answer['items'][i]['volumeInfo'].get('previewLink')
+            
+            }
+            result_list.append(result_dict)
+        context = {'form':form , 'results':result_list}
+        return render(request, 'dashboard/books.html' , context)
+    
+    else:
+        
+        form = Dashboardform()
+    context = {'form':form}
+    return render(request , 'dashboard/books.html' , context)
