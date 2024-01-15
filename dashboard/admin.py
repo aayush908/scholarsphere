@@ -1,5 +1,8 @@
 from django.contrib import admin
-from .models import notes
+from .models import *
 
 # Register your models here.
 admin.site.register(notes)
+admin.site.register(Homework)
+admin.site.register(Todo)
+ 
