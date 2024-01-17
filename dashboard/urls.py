@@ -1,6 +1,7 @@
 from django.urls import path , include
 from . import views
 
+
 urlpatterns = [
     path('', views.home , name = "home"),
     path('notes/', views.note , name = "notes"),
@@ -15,4 +16,8 @@ urlpatterns = [
     path('delete_todo/<int:pk>' , views.delete_todo , name ="delete-todo"),
     path('books' , views.books, name ="books"),
     path('dictionary' , views.dictionary, name ="dictionary"),
+    path('wiki' , views.wiki, name ="wiki"),
+    path('conversion' , views.conversion, name ="conversion"),
+    path('profile' , views.profile, name ="profile"),
+    
 ]
