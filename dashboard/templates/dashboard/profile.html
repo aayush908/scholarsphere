@@ -1,4 +1,5 @@
-{% extends 'dashboard/base.html' %} {% load static %}
+{% extends 'dashboard/base.html' %} 
+{% load static %}
 {% load crispy_forms_tags%}
 {% block content %}
 <section class="text-center">
@@ -33,14 +34,14 @@
                         </a>
                     </td>
 
-                    <td><a href="#"><i class="fa fa-trash fa-2x"></i></a></td>
+                    <td><a href="{% url 'delete-todo' todo.id %}"><i class="fa fa-trash fa-2x"></i></a></td>
                 </tr>{% endfor %}
             </tbody>
         </table>
        {% else%}
         <h3>All To dos are completed!!!!</h3>
         {% endif %}
-        <a href="#" class="btn btn-danger">To Do</a>
+        <a href="{% url 'todo' %}" class="btn btn-danger">To Do</a>
         <br><br>
         {% if homeworks %}
         <h2>Due Homeworks</h2>
@@ -63,7 +64,7 @@
                     <td>{{homework.subject}}</td>
                     <td>{{homework.title}}</td>
                     <td>{{homework.description}}</td>
-                    <td>due</td>
+                    <td>{{homework.due}}</td>
 
                     <td>
                         <a href="#">
@@ -75,14 +76,14 @@
                             </div>
                         </a>
                     </td>
-                    <td><a href="#"><i class="fa fa-trash fa-2x"></i></a></td>
+                    <td><a href="{% url 'delete-homework' homework.id %}"><i class="fa fa-trash fa-2x"></i></a></td>
                 </tr>{% endfor %}
             </tbody>
         </table>
         {% else %}
         <h3>All To homeworks are completed!!!!</h3>
         {% endif %}
-        <a href="#" class="btn btn-danger">Homeworks</a>
+        <a href="{% url 'homework' %}" class="btn btn-danger">Homeworks</a>
     </div>
 </section>
 

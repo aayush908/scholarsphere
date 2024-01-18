@@ -14,6 +14,45 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
     integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
+
+  <style>
+  footer {
+      background-color: #333;
+      color: #fff;
+      margin = 10px ;
+      
+      text-align: center;
+    
+      width: 100%;
+    
+  } 
+  
+
+  
+.social-icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.social-icons a {
+  margin: 20px; /* Adjust the margin between icons */
+}
+
+.social-icons img {
+  width: 10vw; /* 5% of the viewport width; adjust as needed */
+  max-width: 60px; /* Set a maximum width to prevent excessively large images on large screens */
+  height: auto; /* Maintain aspect ratio */
+}
+
+/* Additional styles for small screens (e.g., mobile devices) */
+@media only screen and (max-width: 600px) {
+  .social-icons img {
+      width: 10vw; /* Adjust the size for smaller screens */
+      max-width: 30px; /* Set a smaller maximum width for smaller screens */
+  }
+}
+  </style> 
 </head>
 
 <body>
@@ -26,9 +65,11 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
           <ul class="navbar-nav mb-2 mb-lg-0">
+            {% if user.is_authenticated %}
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/">Home</a>
             </li>
+            
             <li class="nav-item">
               <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
@@ -55,14 +96,16 @@
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#">Logout</a>
+              <a class="nav-link" href="{% url 'logout'%}">Logout</a>
             </li>
+            {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'register' %}">Register</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{% url 'login' %}">Login</a>
             </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -79,12 +122,33 @@
       </button>
     </div>{% endfor %}
     {% endif %}
+    
     {% block content %} 
    
 
     {% endblock content %}
 
+   
+
   </main>
+  <footer id ="pattern" class = "my-3" >
+    <!-- Social Media Icons -->
+    <div class="social-icons">
+        <a href="https://www.linkedin.com/in/aayush-kapil-759959252" target="_blank"><img src="{% static 'images/lin.png' %}" alt="LinkedIn" width="70" height="70"></a>
+        <a href="#" target="_blank"><img src="{% static 'images/github.png' %}" alt="Github" width="90" height="100"></a>
+        <a href="#" target="_blank"><img src="{%static 'images/port.png' %}" alt="Portfolio" width="70" height="70"></a>
+        <a href="#" target="_blank"><img src="{%static 'images/inst.png'%}" alt="Instagram" width="70" height="70"></a>
+       
+        <!-- Add more social media icons as needed -->
+    </div>
+  <br>
+    <!-- Copyright Message -->
+    <p>&copy; 2023 QuickLoom Blog. All rights reserved.</p>
+  
+    <!-- Designer Name -->
+    <p class="designer-name">Website designed by <a href="https://www.linkedin.com/in/aayush-kapil-759959252" target="_blank">AAYUSH KAPIL</a></p>
+  </footer> 
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
