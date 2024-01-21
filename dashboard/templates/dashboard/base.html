@@ -8,18 +8,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Student-dashboard</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+  <!-- Bootstrap CSS -->
+
+
+<!-- Bootstrap JS dependencies -->
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script> -->
+
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
+    integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" /> -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-xxx" crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"  crossorigin="anonymous" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link rel="stylesheet" href="{% static 'css/main.css' %}" />
 
-  <style>
+  <!-- <style>
   footer {
       background-color: #333;
       color: #fff;
-      margin = 10px ;
+      margin : 10px ;
       
       text-align: center;
     
@@ -52,14 +64,14 @@
       max-width: 30px; /* Set a smaller maximum width for smaller screens */
   }
 }
-  </style> 
+  </style>  -->
 </head>
 
 <body>
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand" href="/">SCHOLAR-SPHERE</a>        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        <a class="navbar-brand" href="/">SCHOLAR-SPHERE</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -74,25 +86,26 @@
               <a class="nav-link" href="{% url 'profile' %}">Profile</a>
             </li>
             <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Options
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                OPTIONS
               </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Books</a>
-                <a class="dropdown-item" href="#">Wikipedia</a>
+              
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'books' %}">Books</a></li>
+                    <li><a class="dropdown-item" href="{% url 'wiki' %}">Wikipedia</a></li>
                 <div class="dropdown-divider"></div>
 
-                <a class="dropdown-item" href="#">Dictionary</a>
-                <a class="dropdown-item" href="{% url 'youtube' %}">Youtube</a>
+                <li><a class="dropdown-item" href="#">Dictionary</a></li>
+                <li><a class="dropdown-item" href="{% url 'youtube' %}">Youtube</a></li>
+                <li><div class="dropdown-divider"></div>
+                <li><a class="dropdown-item" href="{% url 'todo' %}">To-do</a></li>
+                <li><a class="dropdown-item" href="{% url 'homework' %}"> Homework</a></li>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'todo' %}">To-do</a>
-                <a class="dropdown-item" href="{% url 'homework' %}"> Homework</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{% url 'notes' %}">Notes</a>
-                <a class="dropdown-item" href="#">Conversion</a>
-                <div class="dropdown-divider"></div>
-              </div>
+                <li><a class="dropdown-item" href="{% url 'notes' %}">Notes</a></li>
+                <li><a class="dropdown-item" href="{% url 'conversion' %}">Conversion</a></li>
+               
+                
+                </ul>
             </li>
 
             <li class="nav-item">
@@ -131,31 +144,92 @@
    
 
   </main>
-  <footer id ="pattern" class = "my-3" >
-    <!-- Social Media Icons -->
-    <div class="social-icons">
-        <a href="https://www.linkedin.com/in/aayush-kapil-759959252" target="_blank"><img src="{% static 'images/lin.png' %}" alt="LinkedIn" width="70" height="70"></a>
-        <a href="#" target="_blank"><img src="{% static 'images/github.png' %}" alt="Github" width="90" height="100"></a>
-        <a href="#" target="_blank"><img src="{%static 'images/port.png' %}" alt="Portfolio" width="70" height="70"></a>
-        <a href="#" target="_blank"><img src="{%static 'images/inst.png'%}" alt="Instagram" width="70" height="70"></a>
-       
-        <!-- Add more social media icons as needed -->
-    </div>
-  <br>
-    <!-- Copyright Message -->
-    <p>&copy; 2023 QuickLoom Blog. All rights reserved.</p>
+  <footer class="bg-body-tertiary text-center my-3">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a
+        data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #3b5998;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
   
-    <!-- Designer Name -->
-    <p class="designer-name">Website designed by <a href="https://www.linkedin.com/in/aayush-kapil-759959252" target="_blank">AAYUSH KAPIL</a></p>
-  </footer> 
+        <!-- Twitter -->
+        <a
+          data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #55acee;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-twitter"></i
+        ></a>
+  
+        <!-- Google -->
+        <a
+          data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #dd4b39;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-google"></i
+        ></a>
+  
+        <!-- Instagram -->
+        <a
+          data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #ac2bac;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-instagram"></i
+        ></a>
+  
+        <!-- Linkedin -->
+        <a
+          data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #0082ca;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-linkedin-in"></i
+        ></a>
+        <!-- Github -->
+        <a
+          data-mdb-ripple-init
+          class="btn text-white btn-floating m-1"
+          style="background-color: #333333;"
+          href="#!"
+          role="button"
+          ><i class="fab fa-github"></i
+        ></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
+      © 2020 Copyright:
+      <a class="text-body" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    // Initialization for ES Users
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
   </script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-  </script>
+  </script> -->
 </body>
 
 </html>
