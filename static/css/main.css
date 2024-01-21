@@ -25,13 +25,13 @@ footer {
 }
 
 .card {
-    box-shadow: 15px 15px 10px rgb(78, 77, 77);
+    box-shadow: 15px 15px 10px rgb(108, 22, 134);
 
 }
 
 
 .card-header:hover {
-    background: rgb(11, 22, 83) !important;
+    background: rgb(146, 49, 175) !important;
     color: whitesmoke !important;
     transition: 0.1s ease-in;
 }
@@ -49,12 +49,12 @@ a:hover {
 
 
 .custom-header:hover {
-    background: rgb(143, 189, 186) !important;
+    background: rgb(153, 48, 185) !important;
 }
 
 .card-header {
     color: black !important;
-    background: rgb(152, 214, 230) !important;
+    background: rgb(177, 68, 159) !important;
     transition: 0.3s ease-in;
 
 }
@@ -129,7 +129,7 @@ body {
 
 
 .card-header {
-    background-color: rgb(133, 204, 231);
+    background-color: rgb(109, 22, 131);
 }
 
 
