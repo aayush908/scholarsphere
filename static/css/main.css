@@ -48,9 +48,9 @@ a:hover {
 
 
 
-.custom-header:hover {
-    background: rgb(153, 48, 185) !important;
-}
+/* .custom-header:hover {
+    background: rgb(172, 162, 175) !important;
+} */
 
 .card-header {
     color: black !important;

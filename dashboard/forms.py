@@ -1,5 +1,5 @@
 from django import forms
-from . models import *
+from .models import *
 from django.contrib.auth.forms import UserCreationForm
 
 class NotesForm(forms.ModelForm):

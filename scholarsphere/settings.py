@@ -17,9 +17,9 @@ import os
 # ... other settings ...
 
 # Parse database configuration from $DATABASE_URL
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
+# DATABASES = {
+#     'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+# }
 
 # ... other settings ...
 
@@ -95,13 +95,14 @@ WSGI_APPLICATION = 'scholarsphere.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES["default"] = dj_database_url.parse("postgres://aayush_kapil:1a9nOsMppnIsUw4vbUWYc5DJu7hr7dUC@dpg-cm40k6q1hbls73aa97t0-a.singapore-postgres.render.com/django_db_edo7")
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+DATABASES["default"] = dj_database_url.parse("postgres://aayush_kapil:1a9nOsMppnIsUw4vbUWYc5DJu7hr7dUC@dpg-cm40k6q1hbls73aa97t0-a.singapore-postgres.render.com/django_db_edo7")
 
 
 

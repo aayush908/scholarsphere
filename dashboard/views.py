@@ -1,8 +1,8 @@
 import wikipedia
 from django.shortcuts import render , redirect
-from . models import *
+from .models import *
 from django.urls import reverse
-from . forms import *
+from .forms import *
 from django.contrib import messages
 from django.views import generic
 from youtubesearchpython import VideosSearch
@@ -15,6 +15,7 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 def home(request):
     return render(request , 'dashboard/home.html')
+
 @login_required
 def note(request):
     if request.method =="POST":
@@ -74,7 +75,7 @@ def homework(request):
 @login_required
 def update_homework(request , pk = None):
     homework = Homework.objects.get(id = pk)
-    print(homework)
+    
     if homework.is_finished == True:
         homework.is_finished = False
     else:
@@ -91,6 +92,7 @@ def delete_homework(request , pk = None):
 def youtube(request ):
     if request.method =="POST":
         form = Dashboardform(request.POST)
+        # form = Dashboardform()
         text = request.POST['text']
         video = VideosSearch(text , limit = 10)
         result_list = []
@@ -131,12 +133,13 @@ def todo(request):
                     finished = False
             except:
                 finished = False
+          
             todos = Todo(user = request.user, title =request.POST['title'] , is_finished = finished )
             todos.save()
             messages.success(request ,f"Todo added from :{request.user.username} ")
-    else:
+    
               
-        form = TodoForm()
+    form = TodoForm()
     alldata = Todo.objects.filter(user = request.user)
     if len(alldata) == 0:
         todo_done = True
@@ -148,7 +151,7 @@ def todo(request):
 @login_required
 def update_todo(request , pk = None):
     todo = Todo.objects.get(id = pk)
-    print(todo)
+    
     if todo.is_finished == True:
         todo.is_finished = False
     else:
@@ -175,6 +178,7 @@ def books(request):
             result_dict = {
                 'title':answer['items'][i]['volumeInfo']['title'],
                 'subtitle':answer['items'][i]['volumeInfo'].get('subtitle'),
+                'authors':answer['items'][i]['volumeInfo']['authors'],
                 
                 'description':answer['items'][i]['volumeInfo'].get('description'),
                 'count':answer['items'][i]['volumeInfo'].get('pageCount'),
@@ -201,30 +205,48 @@ def dictionary(request):
         url = "https://api.dictionaryapi.dev/api/v2/entries/en_US/"+text
         r = requests.get(url)
         answer = r.json()
+        # try:
+        #     phonetics = answer[0]['phonetics'][0]['text']
+        #     audio = answer[0]['phonetics'][0]['audio']
+        #     definition = answer[0]['meanings'][0]['definitions'][0]['definition']
+        #     example = answer[0]['meanings'][0]['definitions'][0]['example']
+        #     synonyms = answer[0]['meanings'][0]['definitions'][0]['synonyms']
+            
+        #     context = {
+        #         'form':form,
+        #         'input':text,
+        #         'phonetics':phonetics,
+        #         'audio':audio,
+        #         'definition':definition, 
+        #         'example':example,
+        #         'synonyms':synonyms
+        #     }
+            
         try:
             phonetics = answer[0]['phonetics'][0]['text']
             audio = answer[0]['phonetics'][0]['audio']
             definition = answer[0]['meanings'][0]['definitions'][0]['definition']
             example = answer[0]['meanings'][0]['definitions'][0]['example']
             synonyms = answer[0]['meanings'][0]['definitions'][0]['synonyms']
-            
+
             context = {
-                'form':form,
-                'input':text,
-                'phonetics':phonetics,
-                'audio':audio,
-                'definition':definition, 
-                'example':example,
-                'synonyms':synonyms
+                'form': form,
+                'input': text,
+                'phonetics': phonetics,
+                'audio': audio,
+                'definition': definition,
+                'example': example,
+                'synonyms': synonyms
             }
             
         except:
             context = {
                 'form':form,
-                'input':''
+                'input':text
                 
             }
-        
+            
+        print(context)
         return render(request , "dashboard/dictionary.html", context)
           
     else:
@@ -250,67 +272,70 @@ def wiki(request):
     context = {'form':form}
     return render(request , 'dashboard/wiki.html' , context)
 
-def conversion(request):
-    if request.method =="POST":
-        form = ConversionForm(request.POST)
-        if request.POST['measurement'] == 'length':
-            measurement_form = ConversionLengthform()
-            context = {
-                'form':form , 
-                'm_form':measurement_form,
-                'input':True
-            }
-            if 'input' in request.POST:
-                first = request.POST.ge('measure1' , '')
-                second = request.POST.get('measure2' , '')
-                input = request.POST['input']
-                answer = ''
-                if input and int(input) >= 0:
-                    if first == 'yard' and second == 'foot':
-                        answer  = f"{input} yard = {int(input)*3} foot"
+# def conversion(request):
+#     if request.method =="POST":
+#         form = ConversionForm(request.POST)
+#         if request.POST['measurement'] == 'length':
+#             measurement_form = ConversionLengthform()
+#             context = {
+#                 'form':form , 
+#                 'm_form':measurement_form,
+#                 'input':True
+#             }
+#             if 'input' in request.POST:
+#                 first = request.POST.get('measure1' , '')
+#                 second = request.POST.get('measure2' , '')
+#                 input = request.POST['input']
+#                 answer = ''
+#                 if input and int(input) >= 0:
+#                     if first == 'yard' and second == 'foot':
+#                         answer  = f"{input} yard = {int(input)*3} foot"
                         
-                    if first == "foot" and second == "yard":
-                        answer  = f"{input} foot = {int(input/3)} yard"
-                context = {
-                    'form':form,
-                    'm_form':measurement_form,
-                    'input':True,
-                    'answer':answer
-                }
+#                     if first == "foot" and second == "yard":
+#                         answer  = f"{input} foot = {int(input/3)} yard"
+#                 context = {
+#                     'form':form,
+#                     'm_form':measurement_form,
+#                     'input':True,
+#                     'answer':answer
+#                 }
                 
-        if request.POST['measurement'] == 'mass':
-            measurement_form = ConversionMassForm()
-            context = {
-                'form':form , 
-                'm_form':measurement_form,
-                'input':True
-            }
-            if 'input' in request.POST:
-                first = request.POST.ge('measure1' , '')
-                second = request.POST.get('measure2' , '')
-                input = request.POST['input']
-                answer = ''
+#         if request.POST['measurement'] == 'mass':
+#             measurement_form = ConversionMassForm()
+#             context = {
+#                 'form':form , 
+#                 'm_form':measurement_form,
+#                 'input':True
+#             }
+#             if 'input' in request.POST:
+#                 first = request.POST.ge('measure1' , '')
+#                 second = request.POST.get('measure2' , '')
+#                 input = request.POST['input']
+#                 answer = ''
                 
-                if input and int(input) >= 0:
-                    if first == "pound" and second == "kilogram":
-                        answer  = f"{input} pound  = {int(input)*0.453592} foot"
+#                 if input and int(input) >= 0:
+#                     if first == "pound" and second == "kilogram":
+#                         answer  = f"{input} pound  = {int(input)*0.453592} foot"
                         
-                    if first == "kilogram" and second == "pound":
-                        answer  = f"{input} kilogram = {int(input)*2.20462} pound"
-                context = {
-                    'form':form,
-                    'm_form':measurement_form,
-                    'input':True,
-                    'answer':answer
-                }
+#                     if first == "kilogram" and second == "pound":
+#                         answer  = f"{input} kilogram = {int(input)*2.20462} pound"
+#                 context = {
+#                     'form':form,
+#                     'm_form':measurement_form,
+#                     'input':True,
+#                     'answer':answer
+#                 }
         
-    else:
-        form = ConversionForm()
-    context = {
-        'form':form,
-        'input':False
-    }
-    return render(request , 'dashboard/conversion.html' , context)
+#     else:
+#         form = ConversionForm()
+#     context = {
+#         'form':form,
+#         'input':False
+#     }
+#     return render(request , 'dashboard/conversion.html' , context)
+
+def chatgpt(request):
+    return render(request , 'dashboard/chatgpt.html')
 
 def register(request):
     if request.method =="POST":
@@ -332,7 +357,7 @@ def register(request):
 def profile(request):
     homeworks = Homework.objects.filter(is_finished = False , user = request.user)
     todos = Todo.objects.filter(is_finished = False , user = request.user)
-    print(todos)
+    
     # if len(homework) == 0:
     #     homework_done = False
     # else:
