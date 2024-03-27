@@ -9,9 +9,6 @@ from youtubesearchpython import VideosSearch
 import requests
 from django.contrib.auth.decorators import login_required
 
-
-
-
 # Create your views here.
 def home(request):
     return render(request , 'dashboard/home.html')
@@ -335,7 +332,9 @@ def wiki(request):
 #     return render(request , 'dashboard/conversion.html' , context)
 
 def chatgpt(request):
-    return render(request , 'dashboard/chatgpt.html')
+    
+
+    return render(request, "dashboard/chatgpt.html")
 
 def register(request):
     if request.method =="POST":
